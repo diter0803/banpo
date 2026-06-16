@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1d1310" />
+    <meta name="description" content="以半坡纹样为粒子的互动创作实验室" />
+    <title>半坡万象 · 互动纹样实验室</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231d1310'/%3E%3Cpath d='M12 33c12-18 28-18 40 0-12 18-28 18-40 0Zm10 0c6 7 14 7 20 0-6-7-14-7-20 0Z' fill='%23c55b34'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+    <header class="site-header">
+      <a class="brand" href="#top">
+        <span class="brand-mark">人</span>
+        <span><b>半坡万象</b><small>BANPO PARTICLE LAB</small></span>
+      </a>
+      <nav aria-label="创作功能">
+        <button class="nav-link active" data-target="portrait">塑我</button>
+        <button class="nav-link" data-target="expression">观相</button>
+      </nav>
+      <div class="local-note"><i></i> 本地运行 · 影像不上传</div>
+    </header>
+
+    <div class="music-dock" data-music-dock>
+      <audio id="background-music" src="./public/audio/douwu-banpo.mp3" preload="metadata" loop></audio>
+      <button class="music-toggle" id="music-toggle" type="button" aria-pressed="false" aria-label="打开背景音乐">
+        <span class="music-icon" aria-hidden="true">♪</span>
+        <b id="music-state">音乐关闭</b>
+      </button>
+      <label class="music-volume" for="music-volume">
+        <span>音量</span>
+        <input id="music-volume" type="range" min="0" max="100" value="42" />
+        <output id="music-volume-value" for="music-volume">42%</output>
+      </label>
+    </div>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">仰韶纹样 × 当代交互</p>
+          <h1>让古老的符号，<br /><em>重新感知你。</em></h1>
+          <p class="hero-lead">取一枚鱼纹、一只陶瓶、一段几何边饰。拖拽、旋转与叠加，让六千年前的图形成为属于你的当代拼贴。</p>
+          <button class="primary-btn" data-jump="portrait">开始生成 <span>↘</span></button>
+        </div>
+        <div class="hero-orbit" aria-hidden="true">
+          <div class="orbit orbit-a"></div><div class="orbit orbit-b"></div>
+          <div class="hero-symbol">鱼</div>
+          <p>纹样不是静止的遗存<br />它仍在寻找新的身体</p>
+        </div>
+        <div class="hero-index">001—055<br /><span>素材已入库</span></div>
+      </section>
+
+      <section class="mode-switch" aria-label="创作模式">
+        <button class="mode-tab active" data-target="portrait"><span>壹</span><b>拼贴塑我</b><small>拖拽组合</small></button>
+        <button class="mode-tab" data-target="expression"><span>贰</span><b>以纹观相</b><small>捕捉表情</small></button>
+      </section>
+
+      <section class="workspace active" id="portrait">
+        <div class="section-heading">
+          <div><span class="chapter">壹 · 纹样生成器</span><h2>五步，构造一组半坡纹饰</h2></div>
+          <p>从骨架到母题、几何带、边框与色彩，逐层完成一组可应用的纹样设计。</p>
+        </div>
+        <div class="generator-shell">
+          <div class="generator-toolbar">
+            <div class="tool-cluster">
+              <button id="collage-undo">↶ 撤销</button><button id="collage-redo">↷ 重做</button><button id="collage-clear">重置</button>
+            </div>
+            <div class="creation-progress">
+              <button class="active" data-step="1"><i>1</i>骨架</button><button data-step="2"><i>2</i>母题</button>
+              <button data-step="3"><i>3</i>几何带</button><button data-step="4"><i>4</i>边框</button><button data-step="5"><i>5</i>色彩</button>
+            </div>
+            <div class="tool-cluster palette-tools">
+              <button class="palette-button active" data-palette="classic"><i class="palette-dot classic"></i>红陶</button>
+              <button class="palette-button" data-palette="rubbing"><i class="palette-dot rubbing"></i>拓片</button>
+              <button class="palette-button" data-palette="earth"><i class="palette-dot earth"></i>大地</button>
+              <button class="export-button" id="portrait-download">导出 PNG</button>
+            </div>
+          </div>
+          <div class="generator-main">
+            <aside class="workflow-panel">
+              <div class="workflow-title"><span>STEP 01</span><b>选择构图骨架</b><small>决定元素的初始排列规则</small></div>
+              <div class="skeleton-options">
+                <button class="skeleton-card active" data-skeleton="ring"><svg viewBox="0 0 80 56"><ellipse cx="40" cy="28" rx="28" ry="18"/><circle cx="12" cy="28" r="3"/><circle cx="40" cy="10" r="3"/><circle cx="68" cy="28" r="3"/></svg><b>环形带状</b><small>模拟陶器口沿</small></button>
+                <button class="skeleton-card" data-skeleton="radial"><svg viewBox="0 0 80 56"><path d="M40 28V5M40 28l24-16M40 28h32M40 28l24 16M40 28v23M40 28 16 44M40 28H8M40 28 16 12"/><circle cx="40" cy="28" r="5"/></svg><b>扇形旋转</b><small>中心放射对称</small></button>
+                <button class="skeleton-card" data-skeleton="diagonal"><svg viewBox="0 0 80 56"><path d="M6 50 74 6M12 38l10 6M28 28l10 6M44 18l10 6"/></svg><b>对角分割</b><small>形成交替区域</small></button>
+                <button class="skeleton-card" data-skeleton="central"><svg viewBox="0 0 80 56"><circle cx="40" cy="28" r="17"/><path d="M40 5v7M40 44v7M17 28h7M56 28h7"/></svg><b>中央符号</b><small>徽章图腾构图</small></button>
+              </div>
+              <div class="workflow-actions"><button id="collage-random">生成灵感构图</button><button id="collage-layout">按骨架重排</button></div>
+              <div class="symbol-reading"><span>文化符码</span><b id="symbol-title">等待你的第一个母题</b><p id="symbol-copy">选择鱼、人面、鹿或蛙纹，系统会根据组合生成纹样解读。</p></div>
+            </aside>
+            <div class="generator-canvas-column">
+              <div class="canvas-ruler"><span>900 PX</span><b id="skeleton-label">环形带状骨架</b><span>680 PX</span></div>
+              <div class="collage-stage" id="collage-dropzone">
+                <canvas id="portrait-canvas" width="900" height="680"></canvas>
+                <div class="collage-empty" id="portrait-empty"><span>＋</span><b>从下方拖入一个母题</b><small>先选择骨架，再加入纹样积木</small></div>
+                <div class="collage-help">拖动移动 · 右下角缩放 · 上方圆点旋转</div>
+              </div>
+              <div class="canvas-footer-tools">
+                <button id="collage-back">后移</button><button id="collage-front">前移</button><button id="collage-duplicate">复制</button>
+                <button id="collage-flip">翻转</button><button id="collage-delete">删除</button><button id="pattern-export">连续图案</button><button id="mockup-open">应用预览</button>
+              </div>
+            </div>
+            <aside class="parameter-panel">
+              <div class="parameter-empty" id="parameter-empty"><span>◌</span><b>选择一个纹样单元</b><p>选中画布元素后显示专属参数。</p></div>
+              <div id="parameter-content" hidden></div>
+            </aside>
+          </div>
+          <div class="generator-library">
+            <div class="library-tabs">
+              <button class="active" data-library="motif"><span>01</span>生物母题</button>
+              <button data-library="geometry"><span>02</span>几何装饰</button>
+              <button data-library="border"><span>03</span>边框分隔</button>
+            </div>
+            <div class="library-tray">
+              <div class="collage-assets active" id="motif-assets"></div><div class="collage-assets" id="geometry-assets"></div><div class="collage-assets" id="border-assets"></div>
+            </div>
+            <div class="library-note">
+              <b>本地纹样积木</b>
+              <p>鱼纹、人面鱼纹及其部件均拆自文件夹位图；选中元素后可生成直线、环形或网格阵列，也可以加入自己的透明纹样继续拼贴。</p>
+              <label class="motif-upload" for="custom-motif-upload">
+                <input id="custom-motif-upload" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" multiple />
+                <span>＋ 上传本地纹样</span>
+                <small>支持 PNG、JPG、WebP、SVG</small>
+              </label>
+            </div>
+          </div>
+          <div class="advanced-row">
+            <div class="keyword-assist"><span>灵感辅助</span><input id="keyword-input" placeholder="输入：太阳、丰收、力量、水…" /><button id="keyword-generate">关键词生成</button></div>
+            <div class="output-links"><button id="save-design">保存设计</button><button id="load-design">读取设计</button><button id="collage-clear-secondary">新建设计</button></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="workspace" id="expression">
+        <div class="section-heading">
+          <div><span class="chapter">贰 · 观相</span><h2>开启你的半坡灵魂镜像</h2></div>
+          <p>让当代的喜怒哀乐，通过鱼、水波与几何纹重新显形，进行一场跨越六千年的灵魂对话。</p>
+        </div>
+        <div class="soul-mirror">
+          <div class="mirror-toolbar">
+            <div class="mirror-status"><i id="expression-dot"></i><b id="expression-name">静候唤醒</b><span id="expression-detail">摄像头尚未开启</span></div>
+            <div class="mirror-actions">
+              <button id="expression-capture" title="截取当前灵魂镜像">截相</button>
+              <button id="expression-record" title="按住空格也可录制">录制</button>
+              <button id="expression-palette">红陶模式</button>
+              <button id="expression-density">粒子 100%</button>
+              <button id="expression-performance">性能：自动</button>
+              <button id="expression-close">退出</button>
+            </div>
+          </div>
+          <div class="mirror-main">
+            <aside class="mirror-side">
+              <div class="camera-preview">
+                <video id="camera-video" autoplay muted playsinline></video>
+                <img id="fallback-photo" alt="上传的正面照片" />
+                <div class="camera-off" id="camera-off"><span>◉</span><b>镜头尚未开启</b><small>影像只在此设备中处理</small></div>
+                <div class="camera-frame"></div>
+              </div>
+              <button class="primary-btn full" id="camera-toggle">开启灵魂镜像 <span>●</span></button>
+              <label class="fallback-upload" for="expression-photo">
+                <input id="expression-photo" type="file" accept="image/*" />
+                <span>摄像头不可用？</span><b>上传正面照片生成静态面具</b>
+              </label>
+              <div class="privacy-note"><b>本地隐私保护</b><p>面部检测、粒子渲染和录制全部在浏览器内完成，视频与照片绝不上传。</p></div>
+              <div class="expression-meter-list">
+                <div><span>张嘴</span><i><b id="meter-mouth"></b></i></div>
+                <div><span>微笑</span><i><b id="meter-smile"></b></i></div>
+                <div><span>左眉</span><i><b id="meter-brow-left"></b></i></div>
+                <div><span>右眉</span><i><b id="meter-brow-right"></b></i></div>
+                <div><span>左眨眼</span><i><b id="meter-blink-left"></b></i></div>
+                <div><span>右眨眼</span><i><b id="meter-blink-right"></b></i></div>
+                <div><span>头部姿态</span><i><b id="meter-pose"></b></i></div>
+              </div>
+            </aside>
+            <div class="expression-stage" id="expression-stage">
+              <canvas id="expression-canvas" width="1100" height="760"></canvas>
+              <div class="pottery-border" aria-hidden="true"></div>
+              <div class="mirror-intro" id="mirror-intro">
+                <span>人面 · 鱼纹 · 灵魂转化</span>
+                <b>面向镜头<br />开启你的半坡灵魂镜像</b>
+                <p>微笑、眨眼、挑眉或张嘴，观察纹样如何回应你。</p>
+              </div>
+              <div class="meditation-badge" id="meditation-badge">冥想模式 · 粒子正在归位</div>
+              <div class="recording-badge" id="recording-badge"><i></i> 正在记录灵魂镜像 <span>00:00</span></div>
+              <div class="expression-legend"><span>鱼形</span><span>水波</span><span>三角</span><span>圆目</span><span>网格</span></div>
+              <div class="shortcut-hints"><span>单击 截相</span><span>双击 换色</span><span>滚轮 调密度</span><span>长按空格 录制</span></div>
+            </div>
+            <aside class="mirror-reading">
+              <span class="chapter">实时文化释义</span>
+              <b id="mirror-reading-title">平静的面具</b>
+              <p id="mirror-reading-copy">庄重的人面纹缓慢呼吸，等待你的情绪唤醒鱼群与几何符号。</p>
+              <div class="region-map">
+                <div><i>额</i><span>网格纹<br><small>秩序与思考</small></span></div>
+                <div><i>眉</i><span>三角纹<br><small>警觉与发现</small></span></div>
+                <div><i>眼</i><span>圆圈纹<br><small>灵魂之窗</small></span></div>
+                <div><i>鼻</i><span>弦纹<br><small>生命支柱</small></span></div>
+                <div><i>口</i><span>鱼与水波<br><small>表达与滋养</small></span></div>
+              </div>
+              <div class="face-customizer">
+                <span class="chapter">五官自定义</span>
+                <label><span>眼型</span><select id="eye-style"><option value="line">半坡直线眼</option><option value="dot">半坡圆点眼</option><option value="round">半坡圆圈眼</option><option value="arc">半坡弯弧眼</option><option value="closed">闭目</option><option value="danfeng">丹凤眼</option><option value="almond">杏仁眼</option></select></label>
+                <label><span>眉型</span><select id="brow-style"><option value="triangle">三角眉</option><option value="willow">柳叶眉</option><option value="crescent">新月眉</option><option value="straight">平直眉</option></select></label>
+                <div class="feature-visibility">
+                  <b>五官显示</b>
+                  <label><input type="checkbox" data-feature="forehead" checked><span>额</span></label>
+                  <label><input type="checkbox" data-feature="brows" checked><span>眉</span></label>
+                  <label><input type="checkbox" data-feature="eyes" checked><span>眼</span></label>
+                  <label><input type="checkbox" data-feature="nose" checked><span>鼻</span></label>
+                  <label><input type="checkbox" data-feature="mouth" checked><span>口</span></label>
+                </div>
+                <div class="pupil-status">
+                  <div><span>瞳语状态</span><b id="eye-state-label">平静凝视</b></div>
+                  <div><span>领地隔离</span><b id="territory-state">五区边界稳定</b></div>
+                  <div><span>响应顺序</span><b id="choreography-state">眼 → 眉 → 嘴</b></div>
+                </div>
+                <div class="eye-layer-guide" aria-label="眼部粒子结构">
+                  <div><i class="eye-core-dot"></i><span><b>眼核层</b><small>瞳孔锚点</small></span></div>
+                  <div><i class="eye-outline-line"></i><span><b>眼廓层</b><small>表情轮廓</small></span></div>
+                  <div><i class="eye-halo-dot"></i><span><b>眼周晕层</b><small>柔光扩散</small></span></div>
+                </div>
+                <p class="territory-note">粒子只在所属感官区域内活动，边界保留约 8px 留白；同时触发时优先响应眼部。</p>
+              </div>
+              <div class="session-summary"><span>本次主要情绪</span><b id="session-emotion">平静的面具</b><small id="session-time">体验尚未开始</small></div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="archive">
+        <div class="section-heading">
+          <div><span class="chapter">素材档案</span><h2>来自文件夹的半坡符号</h2></div>
+          <p>系统随机抽取这些纹样，裁去白底后作为每一枚独立粒子。</p>
+        </div>
+        <div class="asset-marquee" id="asset-marquee"></div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="brand"><span class="brand-mark">人</span><span><b>半坡万象</b><small>LOCAL INTERACTIVE ARCHIVE</small></span></div>
+      <div class="footer-credit"><p>古老纹样不止被观看，也可以回应当下。</p><b>© 2026 Design by 纪德禹</b></div>
+      <a href="#top">回到顶部 ↑</a>
+    </footer>
+    <script defer src="./src/motifs.js"></script>
+    <script defer src="./src/main.js"></script>
+    <script defer src="./src/expression.js"></script>
+  </body>
+</html>
